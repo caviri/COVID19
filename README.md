@@ -182,12 +182,29 @@ Strategy A: Creating environment.
 - `conda install ipykernel`
 - `python -m ipykernel install --user --name covid19`
 
+On windows I have some issues starting the SparkSession. It last forever. 
 
 Strategy B: Docker machine
 
 - `docker pull jupyter/pyspark-notebook`
-- `docker run -p 10000:8888 jupyter/pyspark-notebook`
+- `docker run -p 10000:8888 -p 4040:4040 jupyter/pyspark-notebook`
 
+The docker image works fine, and we have access to the dashboard in `localhost:4040`. 
+
+#### 24/10
+
+After checking the db structure, the project initially can be organized as follows:
+
+```mermaid
+graph LR;
+    CT(Covid tracker JSON) --> PS(PySpark Loading)
+    subgraph one[ETL]
+    PS --> HV(HIVE DB)
+    HV --> GP(Geoparquet)
+    end
+    GP --> BH(Bokeh App)
+
+```
 
 ## License 
 

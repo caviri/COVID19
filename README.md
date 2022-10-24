@@ -241,6 +241,26 @@ root/
  |   Pipfile.lock
  ```
 
+### Tutorial
+
+In order to build the docker image: 
+
+```bash
+docker build -t COVID19:1.0.0 -f Dockerfile .
+```
+
+To run the analysis
+
+```bash
+docker run -d --name COVID19 COVID19:1.0.0 python COVID19_project/etl_run.py
+```
+
+To run the tests
+
+```bash
+docker run -d COVID19 COVID19:1.0.0 python setup.py test
+```
+
 ## License 
 
 MIT License. 

@@ -170,6 +170,13 @@ Every field is organized in 3 categories: cases, testing, and outcomes. Then, ev
         - New deaths
         - Date
 
+
+### Ideas
+
+- Integrate map with color per variable. 
+- Integrate information of events related with measures. Introduce them in the timeline.
+- Accelerate the process 
+
 ### Day log
 
 #### 23/10
@@ -203,8 +210,36 @@ graph LR;
     HV --> GP(Geoparquet)
     end
     GP --> BH(Bokeh App)
-
 ```
+
+
+I found several boilerplates with good templates for data engineering project using PySpark. 
+
+- [PySpark Example Project](https://github.com/AlexIoannides/pyspark-example-project)
+- [PySpark Project Template](https://github.com/hbaflast/pyspark-project-template)
+- [PySpark Spotify ETL](https://github.com/Amaguk2023/Pyspark_Spotify_ETL)
+
+Following the first example. This seems like a nice project structure to start with: 
+
+```bash
+root/
+ |-- configs/
+ |   |-- etl_config.json
+ |-- dependencies/
+ |   |-- logging.py
+ |   |-- spark.py
+ |-- jobs/
+ |   |-- etl_job.py
+ |-- tests/
+ |   |-- test_data/
+ |   |-- | -- employees/
+ |   |-- | -- employees_report/
+ |   |-- test_etl_job.py
+ |   build_dependencies.sh
+ |   packages.zip
+ |   Pipfile
+ |   Pipfile.lock
+ ```
 
 ## License 
 

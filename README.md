@@ -241,6 +241,8 @@ root/
  |   Pipfile.lock
  ```
 
+ 
+
 ### Tutorial
 
 In order to build the docker image: 

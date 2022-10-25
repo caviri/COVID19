@@ -53,7 +53,7 @@ def main():
 
     # execute ETL pipeline
     data = extract_data(spark)
-    data_transformed = transform_data(data, config['temporal_window'])
+    data_transformed = transform_data(data)
     load_data(data_transformed)
 
     # log the success and terminate Spark application
@@ -64,6 +64,6 @@ def main():
 
 
 if __name__ == '__main__':
-    # Check the api is online and that the version is compatible. 
+    # Check if the api is online and that the version is compatible. 
     main()
     

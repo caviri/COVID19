@@ -175,7 +175,8 @@ Every field is organized in 3 categories: cases, testing, and outcomes. Then, ev
 
 - Integrate map with color per variable. 
 - Integrate information of events related with measures. Introduce them in the timeline.
-- Accelerate the process 
+- Accelerate the process
+- Transforms can include moving average as an example. 
 
 ### Day log
 
@@ -241,7 +242,14 @@ root/
  |   Pipfile.lock
  ```
 
- 
+I achieved to read without issues the scheme of the JSON for daily.json. However, when I try to create a DataFrame out of the json obtained via requests, the parsing of the schema is reduced to the first 2 categories. As a minimum viable proof, I decided to extract manually two vairables `total_cases` and `date` in order to follow with the structure of the project. 
+
+I'm exploring the idea of separate the project into 3 docker containers. One dedicated to the ETL, another to HIVE database, and a third for the interactive bokeh app. In the latter, I want to include 2 kind of visualizations, one map based visualization, and another one for the time series. 
+
+
+#### 25/10
+
+In order to simplify the development I took the decission to keep the 3 docker idea as a future update and create a simpler version of the workflow. The output from the ETL pipeline will be saved in a parquet (geoparquet) file and this will be picked up by bopkeh in order to do the visualization. 
 
 ### Tutorial
 

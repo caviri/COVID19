@@ -1,6 +1,6 @@
-import pandas as pd
+from pyspark.sql import dataframe
 
-def data_validation(df: pd.Dataframe) -> bool:
+def data_validation(df: dataframe.Dataframe) -> bool:
     """Transform original dataset.
 
     :param df: Input DataFrame.
@@ -22,19 +22,7 @@ def data_validation(df: pd.Dataframe) -> bool:
 
     return True
 
-
-def transform_data(df: pd.DataFrame, temporal_window: int) -> pd.DataFrame:
-    """Transform original dataset.
-
-    :param df: Input DataFrame.
-    :param steps_per_floor_: The number of steps per-floor at 43 Tanner
-        Street.
-    :return: Transformed DataFrame.
-    """
-
-    return None
-
-def calc_moving_average(df: pd.DataFrame, temporal_window:int) -> pd.DataFrame:
+def calc_moving_average(df: dataframe.DataFrame, temporal_window:int) -> dataframe.DataFrame:
     """Transform original dataset.
 
     :param df: Input DataFrame.
@@ -44,3 +32,14 @@ def calc_moving_average(df: pd.DataFrame, temporal_window:int) -> pd.DataFrame:
     """
     
     return None
+
+def transform_data(df: dataframe.DataFrame, temporal_window: int) -> dataframe.DataFrame:
+    """Transform original dataset.
+
+    :param df: Input DataFrame.
+    :param steps_per_floor_: The number of steps per-floor at 43 Tanner
+        Street.
+    :return: Transformed DataFrame.
+    """
+
+    return df

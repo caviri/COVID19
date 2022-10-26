@@ -3,26 +3,8 @@ import datetime
 from pyspark.sql import DataFrame
 from pyspark.sql.functions import udf, to_date
 from pyspark.sql.types import TimestampType
+import pyspark.pandas as ps
 
-
-def data_validation(df: DataFrame) -> bool:
-    """Transform original dataset.
-
-    :param df: Input DataFrame.
-    :return: Validation output in boolean
-    """
-
-    if df.empty:
-        print('\n* No data were downloaded \n*')
-        return False
-    
-    if not pd.Series(df["date"]).is_unique:
-        print('\n* Primary key check violated. Terminating extraction *\n')
-
-    if df.isnull().values.any():
-        raise Exception('\n* Null values found. Terminating extraction *\n')
-
-    return True
 
 def calc_moving_average(df: DataFrame, temporal_window:int) -> DataFrame:
     """Calcultation of moving average
@@ -47,6 +29,21 @@ def transform_date_to_datetime(date: datetime.date) -> datetime.datetime:
     
     return min_datetime
 
+def calc_daily_difference(df: DataFrame) -> DataFrame:
+    """Calcultation of daily difference
+
+    :param df: Input Spark DataFrame.
+    :return: Transformed DataFrame.
+    """
+    
+    psdf = df.pandas_api()
+    diff_series = psdf["total_cases"].diff()
+    diff_series.name = "difference_total_cases"
+    
+    diff_psdf = ps.merge(psdf, diff_series, left_index=True, right_index=True, how="left")
+    diff_df = diff_psdf.to_spark()
+
+    return diff_df
 
 
 def transform_data(df: DataFrame) -> DataFrame:
@@ -60,5 +57,8 @@ def transform_data(df: DataFrame) -> DataFrame:
     
     reg_transform_date_to_datetime = udf(lambda d: transform_date_to_datetime(d), TimestampType())
     df = df.withColumn("datetime", reg_transform_date_to_datetime("date"))
+    
+    df = df.sort("datetime")
+    df = calc_daily_difference(df)
     
     return df

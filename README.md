@@ -271,6 +271,22 @@ parkSQL = spark.sql("select * from ParquetTable where salary >= 4000 ")
 
 After dealing with some problems realted to the date/datetime format I got the first MVP of the pipeline. Now data is extracted, dates transformed into a proper datetime type, and data loaded into a parquet db. Bokeh app is able to read this data from the database and plot a simple time-series plot in html. This is the first candidate to the first release. 
 
+Useful links:
+- https://crontab.guru/
+- https://github.com/AlexIoannides/pyspark-example-project
+- https://www.youtube.com/watch?v=nVI4xEH7yU8&ab_channel=Intellipaat
+- https://github.com/rvilla87/ETL-PySpark/blob/master/jupyter/ETL.ipynb
+- https://github.com/Amaguk2023/Pyspark_Spotify_ETL
+- https://github.com/hbaflast/pyspark-project-template
+- https://github.com/vivek-bombatkar/Spark-with-Python---My-learning-notes-
+- https://github.com/hyunjoonbok/PySpark/blob/master/PySpark%20Dataframe%20Complete%20Guide%20(with%20COVID-19%20Dataset).ipynb
+- https://www.databricks.com/glossary/extract-transform-load#:~:text=ETL%2C%20which%20stands%20for%20extract,downstream%20to%20solve%20business%20problems.
+- https://www.youtube.com/watch?v=AHMm1wfGuHE&t=1s&ab_channel=TuanVu
+- https://www.revisitclass.com/hadoop/how-to-write-a-spark-dataframe-to-hive-table-in-pyspark/
+- https://hshirodkar.medium.com/apache-hive-on-docker-4d7280ac6f8e
+- 
+
+
 ### Tutorial
 
 In order to build the docker image: 

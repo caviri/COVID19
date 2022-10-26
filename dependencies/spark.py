@@ -15,7 +15,6 @@ from pyspark.sql import SparkSession
 
 from dependencies import logging
 
-
 def start_spark(app_name='my_spark_app', master='local[*]', jar_packages=[],
                 files=[], spark_config={}):
     """Start Spark session, get Spark logger and load config files.
@@ -24,6 +23,7 @@ def start_spark(app_name='my_spark_app', master='local[*]', jar_packages=[],
     will apply when this is called from a script sent to spark-submit.
     All other arguments exist solely for testing the script from within
     an interactive Python console.
+
     This function also looks for a file ending in 'config.json' that
     can be sent with the Spark job. If it is found, it is opened,
     the contents parsed (assuming it contains valid JSON for the ETL job
@@ -32,6 +32,7 @@ def start_spark(app_name='my_spark_app', master='local[*]', jar_packages=[],
     this function. If the file cannot be found then the return tuple
     only contains the Spark session and Spark logger objects and None
     for config.
+
     The function checks the enclosing environment to see if it is being
     run from inside an interactive console session or from an
     environment which has a `DEBUG` environment variable set (e.g.
@@ -42,6 +43,7 @@ def start_spark(app_name='my_spark_app', master='local[*]', jar_packages=[],
     to using the spark-submit and Spark cluster defaults. This will also
     use local module imports, as opposed to those in the zip archive
     sent to spark via the --py-files flag in spark-submit.
+
     :param app_name: Name of Spark app.
     :param master: Cluster connection details (defaults to local[*]).
     :param jar_packages: List of Spark JAR package names.
@@ -100,4 +102,4 @@ def start_spark(app_name='my_spark_app', master='local[*]', jar_packages=[],
         spark_logger.warn('no config file found')
         config_dict = None
 
-    return spark_sess, spark_logger, 
+    return spark_sess, spark_logger, config_dict

@@ -13,6 +13,8 @@ from transform import transform_data
 from load import load_data
 from visualize import read_data, bokeh_app
 
+from dependencies import start_spark
+
 def main():
     """Main ETL script definition.
 
@@ -20,13 +22,12 @@ def main():
     """
 
     # start Spark application and get Spark session, logger and config
-    #spark, log, config = start_spark(
-    #    app_name='my_etl_job',
-    #    files=['configs/config.json'])
-    spark = SparkSession.builder.appName('COVID19').enableHiveSupport().getOrCreate()
+    spark, log, config = start_spark(
+       app_name='covid19',
+       files=['configs/config.json'])
 
     # log that main ETL job is starting
-    #log.warn('etl_job is up-and-running')
+    log.warn('covid19 job is up-and-running')
 
     # execute ETL pipeline
     data = extract_data(spark)
@@ -38,7 +39,7 @@ def main():
     bokeh_app(data_loaded) # Here we can specify the path
 
     # log the success and terminate Spark application
-    #log.warn('test_etl_job is finished')
+    log.warn('covid19 job is finished')
     spark.stop()
 
     return None

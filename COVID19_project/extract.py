@@ -3,7 +3,27 @@ import requests
 from datetime import datetime
 import pandas as pd
 
-from pyspark.sql import SparkSession, DataFrame
+from pyspark.sql import SparkSession, 
+
+
+def data_validation(df: DataFrame) -> bool:
+    """Validate data extracted
+
+    :param df: Input DataFrame.
+    :return: Validation output in boolean
+    """
+
+    if df.empty:
+        print('\n* No data were downloaded \n*')
+        return False
+    
+    if not pd.Series(df["date"]).is_unique:
+        print('\n* Primary key check violated. Terminating extraction *\n')
+
+    if df.isnull().values.any():
+        raise Exception('\n* Null values found. Terminating extraction *\n')
+
+    return True
 
 def extract_data(spark) -> DataFrame:
     """Load data from Parquet file format.
@@ -27,7 +47,9 @@ def extract_data(spark) -> DataFrame:
         total_cases.append(item["cases"]["total"]["value"])
 
     # Improve this directly in spark.
-    pdf = pd.DataFrame({"date": dates, "total_cases": total_cases})
+    pdf = pd.DataFrame({"date": dates, "total_cases": total_cases}).dropna()
+
+    assert data_validation(pdf), '\n* Data validation not achieved *\n'
     sdf = spark.createDataFrame(pdf)
 
     return sdf

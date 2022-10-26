@@ -15,7 +15,7 @@ def read_data(spark: SparkSession) -> DataFrame:
     """
     #with spark_timezone("Europe/Berlin"):
     data_loaded = spark.read.parquet("db.parquet")
-    data_loaded = data_loaded.sort("date", "total_cases")
+    data_loaded = data_loaded.sort("date")
     
     # Check  datetime format
     
@@ -30,7 +30,7 @@ def bokeh_app(df: DataFrame) -> None:
     """
     
     x = df.select("datetime").rdd.flatMap(lambda x: x).collect()
-    y = df.select("total_cases").rdd.flatMap(lambda x: x).collect()
+    y = df.select("difference_total_cases").rdd.flatMap(lambda x: x).collect()
     
     p = figure(title="COVID 19", x_axis_label='Date', y_axis_label='Total Cases', x_axis_type='datetime')
     p.line(x, y, legend_label="Covid cases", line_width=2)

@@ -1,14 +1,16 @@
-from pyspark.sql import dataframe
+import datetime 
 
-def data_validation(df: dataframe.Dataframe) -> bool:
+from pyspark.sql import DataFrame
+from pyspark.sql.functions import udf, to_date
+from pyspark.sql.types import TimestampType
+
+
+def data_validation(df: DataFrame) -> bool:
     """Transform original dataset.
 
     :param df: Input DataFrame.
-    :param steps_per_floor_: The number of steps per-floor at 43 Tanner
-        Street.
-    :return: Transformed DataFrame.
+    :return: Validation output in boolean
     """
-    
 
     if df.empty:
         print('\n* No data were downloaded \n*')
@@ -22,24 +24,41 @@ def data_validation(df: dataframe.Dataframe) -> bool:
 
     return True
 
-def calc_moving_average(df: dataframe.DataFrame, temporal_window:int) -> dataframe.DataFrame:
-    """Transform original dataset.
+def calc_moving_average(df: DataFrame, temporal_window:int) -> DataFrame:
+    """Calcultation of moving average
 
-    :param df: Input DataFrame.
-    :param steps_per_floor_: The number of steps per-floor at 43 Tanner
-        Street.
+    :param df: Input Spark DataFrame.
+    :param temporal_window: The size of the window when calculating the moving average
     :return: Transformed DataFrame.
     """
     
-    return None
+    return df
 
-def transform_data(df: dataframe.DataFrame, temporal_window: int) -> dataframe.DataFrame:
+def transform_date_to_datetime(date: datetime.date) -> datetime.datetime:
+    """transform Date format to Datetime. 
+    
+    It calculates the minimum datetime possible and combine it with the date.
+
+    :param date: Input date.
+    :return: Combined date and minimum time output.
+    """
+    
+    min_datetime = datetime.datetime.combine(date, datetime.time.min)
+    
+    return min_datetime
+
+
+
+def transform_data(df: DataFrame) -> DataFrame:
     """Transform original dataset.
 
-    :param df: Input DataFrame.
-    :param steps_per_floor_: The number of steps per-floor at 43 Tanner
-        Street.
-    :return: Transformed DataFrame.
+    :param df: Input Spark DataFrame.
+    :return: Transformed Spark DataFrame.
     """
-
+    
+    df = df.withColumn("date", to_date("date", 'yyyy-MM-dd'))
+    
+    reg_transform_date_to_datetime = udf(lambda d: transform_date_to_datetime(d), TimestampType())
+    df = df.withColumn("datetime", reg_transform_date_to_datetime("date"))
+    
     return df

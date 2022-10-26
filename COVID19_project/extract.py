@@ -3,9 +3,9 @@ import requests
 from datetime import datetime
 import pandas as pd
 
-from pyspark.sql import SparkSession 
+from pyspark.sql import SparkSession, DataFrame
 
-def extract_data(spark):
+def extract_data(spark) -> DataFrame:
     """Load data from Parquet file format.
 
     :param spark: Spark session object.
@@ -15,18 +15,18 @@ def extract_data(spark):
     response = requests.get("https://api.covidtracking.com/v2/us/daily.json")
 
     # TODO Check if 200 response
-
     js = response.json()
 
-    date = []
+    dates = []
     total_cases = []
 
     data = js['data']
 
     for item in data:
-        dates.append(datetime.strptime(item['date'], "%Y-%m-%d"))
+        dates.append(item['date'])
         total_cases.append(item["cases"]["total"]["value"])
 
+    # Improve this directly in spark.
     pdf = pd.DataFrame({"date": dates, "total_cases": total_cases})
     sdf = spark.createDataFrame(pdf)
 

@@ -251,6 +251,26 @@ I'm exploring the idea of separate the project into 3 docker containers. One ded
 
 In order to simplify the development I took the decission to keep the 3 docker idea as a future update and create a simpler version of the workflow. The output from the ETL pipeline will be saved in a parquet (geoparquet) file and this will be picked up by bopkeh in order to do the visualization. 
 
+Ideas for quality control
+
+- Missing values: interpolate values as approximation, or mean value. df.col_name.interpolate df.col_name.fillna
+- Missing values: Pyspark solution. pyspark.ml.feature import Imputer. https://www.youtube.com/watch?v=K46pPG8Cepo&ab_channel=WebAgeSolutionsInc
+- Data is in incosistent format
+- Duplicate records
+- Outliers
+- Not normalized input data
+
+We can pass the SQL to the parquet.
+
+```python
+parqDF.createOrReplaceTempView("ParquetTable")
+parkSQL = spark.sql("select * from ParquetTable where salary >= 4000 ")
+```
+
+#### 26/10
+
+After dealing with some problems realted to the date/datetime format I got the first MVP of the pipeline. Now data is extracted, dates transformed into a proper datetime type, and data loaded into a parquet db. Bokeh app is able to read this data from the database and plot a simple time-series plot in html. This is the first candidate to the first release. 
+
 ### Tutorial
 
 In order to build the docker image: 

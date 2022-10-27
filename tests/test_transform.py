@@ -43,25 +43,25 @@ class SparkTransformTests(unittest.TestCase):
             .read
             .parquet(self.test_data_path + 'test_input_data.parquet'))
 
-        expected_to_date = (
+        expected_data = (
             self.spark
             .read
             .parquet(self.test_data_path + 'test_to_date.parquet'))
 
-        expected_to_date_cols = len(expected_to_date.columns)
-        expected_to_date_rows = expected_to_date.count()
+        expected_data_cols = len(expected_data.columns)
+        expected_data_rows = expected_data.count()
 
         # act
-        data_transformed = tf.transform_col_date_to_datetime(input_data, input_name="date", output_name="datetime")
+        data_transformed = tf.transform_col_date_to_datetime(input_data, input_name="date", output_name="date")
 
         cols = len(data_transformed.columns)
         rows = data_transformed.count()
 
         # assert
-        self.assertEqual(expected_to_date_cols, cols)
-        self.assertEqual(expected_to_date_rows, rows)
+        self.assertEqual(expected_data_cols, cols)
+        self.assertEqual(expected_data_rows, rows)
 
-        self.assertTrue([col in expected_to_date.columns
+        self.assertTrue([col in expected_data.columns
                          for col in data_transformed.columns])
 
     
@@ -77,25 +77,25 @@ class SparkTransformTests(unittest.TestCase):
             .read
             .parquet(self.test_data_path + 'test_to_date.parquet'))
 
-        expected_to_date = (
+        expected_data = (
             self.spark
             .read
             .parquet(self.test_data_path + 'test_date_to_datetime.parquet'))
 
-        expected_to_date_cols = len(expected_to_date.columns)
-        expected_to_date_rows = expected_to_date.count()
+        expected_data_cols = len(expected_data.columns)
+        expected_data_rows = expected_data.count()
 
         # act
-        data_transformed = tf.transform_col_string_to_date(input_data, input_name="date", output_name="date")
+        data_transformed = tf.transform_col_string_to_date(input_data, input_name="date", output_name="datetime")
 
         cols = len(data_transformed.columns)
         rows = data_transformed.count()
 
         # assert
-        self.assertEqual(expected_to_date_cols, cols)
-        self.assertEqual(expected_to_date_rows, rows)
+        self.assertEqual(expected_data_cols, cols)
+        self.assertEqual(expected_data_rows, rows)
 
-        self.assertTrue([col in expected_to_date.columns
+        self.assertTrue([col in expected_data.columns
                          for col in data_transformed.columns])
 
     def test_transform_to_sort(self):
@@ -110,13 +110,13 @@ class SparkTransformTests(unittest.TestCase):
             .read
             .parquet(self.test_data_path + 'test_date_to_datetime.parquet'))
 
-        expected_to_date = (
+        expected_data = (
             self.spark
             .read
             .parquet(self.test_data_path + 'test_sort.parquet'))
 
-        expected_to_date_cols = len(expected_to_date.columns)
-        expected_to_date_rows = expected_to_date.count()
+        expected_data_cols = len(expected_data.columns)
+        expected_data_rows = expected_data.count()
 
         # act
         data_transformed = input_data.sort("datetime")
@@ -125,10 +125,10 @@ class SparkTransformTests(unittest.TestCase):
         rows = data_transformed.count()
 
         # assert
-        self.assertEqual(expected_to_date_cols, cols)
-        self.assertEqual(expected_to_date_rows, rows)
+        self.assertEqual(expected_data_cols, cols)
+        self.assertEqual(expected_data_rows, rows)
 
-        self.assertTrue([col in expected_to_date.columns
+        self.assertTrue([col in expected_data.columns
                          for col in data_transformed.columns])
 
     def test_calc_daily_difference(self):
@@ -143,13 +143,13 @@ class SparkTransformTests(unittest.TestCase):
             .read
             .parquet(self.test_data_path + 'test_sort.parquet'))
 
-        expected_to_date = (
+        expected_data = (
             self.spark
             .read
             .parquet(self.test_data_path + 'test_calc_daily_difference.parquet'))
 
-        expected_to_date_cols = len(expected_to_date.columns)
-        expected_to_date_rows = expected_to_date.count()
+        expected_data_cols = len(expected_data.columns)
+        expected_data_rows = expected_data.count()
 
         # act
         data_transformed = tf.calc_daily_difference(input_data, input_name="total_cases" , output_name="difference_total_cases" )
@@ -158,13 +158,13 @@ class SparkTransformTests(unittest.TestCase):
         rows = data_transformed.count()
 
         # assert
-        self.assertEqual(expected_to_date_cols, cols)
-        self.assertEqual(expected_to_date_rows, rows)
+        self.assertEqual(expected_data_cols, cols)
+        self.assertEqual(expected_data_rows, rows)
 
-        self.assertTrue([col in expected_to_date.columns
+        self.assertTrue([col in expected_data.columns
                          for col in data_transformed.columns])
 
-    def test_calc_daily_difference(self):
+    def calc_rolling_mean(self):
         """Test data transformer.
         Using small chunks of input data and expected output data, we
         test the transformation step to make sure it's working as
@@ -176,13 +176,13 @@ class SparkTransformTests(unittest.TestCase):
             .read
             .parquet(self.test_data_path + 'test_calc_daily_difference.parquet'))
 
-        expected_to_date = (
+        expected_data = (
             self.spark
             .read
             .parquet(self.test_data_path + 'test_calc_rolling_mean.parquet'))
 
-        expected_to_date_cols = len(expected_to_date.columns)
-        expected_to_date_rows = expected_to_date.count()
+        expected_data_cols = len(expected_data.columns)
+        expected_data_rows = expected_data.count()
 
         # act
         data_transformed = tf.calc_rolling_mean(input_data, 7, input_name="difference_total_cases", output_name="rolling_mean_total_cases")
@@ -191,10 +191,10 @@ class SparkTransformTests(unittest.TestCase):
         rows = data_transformed.count()
 
         # assert
-        self.assertEqual(expected_to_date_cols, cols)
-        self.assertEqual(expected_to_date_rows, rows)
+        self.assertEqual(expected_data_cols, cols)
+        self.assertEqual(expected_data_rows, rows)
 
-        self.assertTrue([col in expected_to_date.columns
+        self.assertTrue([col in expected_data.columns
                          for col in data_transformed.columns])
 
 if __name__ == '__main__':

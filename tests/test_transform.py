@@ -164,7 +164,7 @@ class SparkTransformTests(unittest.TestCase):
         self.assertTrue([col in expected_data.columns
                          for col in data_transformed.columns])
 
-    def calc_rolling_mean(self):
+    def test_calc_rolling_mean(self):
         """Test data transformer.
         Using small chunks of input data and expected output data, we
         test the transformation step to make sure it's working as

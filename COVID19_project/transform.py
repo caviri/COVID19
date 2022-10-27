@@ -100,6 +100,6 @@ def transform_data(df: DataFrame) -> DataFrame:
     
     df = calc_daily_difference(df, input_name="total_cases" , output_name="difference_total_cases" )
     
-    df = calc_rolling_mean(df, 7, input_name="difference_total_cases", column_name="rolling_mean_total_cases")
+    df = calc_rolling_mean(df, 7, input_name="difference_total_cases", output_name="rolling_mean_total_cases")
     
     return df

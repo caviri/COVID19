@@ -1,6 +1,4 @@
-import json
 import requests
-from datetime import datetime
 import pandas as pd
 
 from pyspark.sql import SparkSession, DataFrame
@@ -25,7 +23,7 @@ def data_validation(df: DataFrame) -> bool:
 
     return True
 
-def extract_data(spark) -> DataFrame:
+def extract_data(spark: SparkSession) -> DataFrame:
     """Load data from Parquet file format.
 
     :param spark: Spark session object.
@@ -34,7 +32,9 @@ def extract_data(spark) -> DataFrame:
 
     response = requests.get("https://api.covidtracking.com/v2/us/daily.json")
 
-    # TODO Check if 200 response
+    if response.status_code != 200:
+        raise Exception(f'\n* Request failed with status code {response.status_code} *\n')
+
     js = response.json()
 
     dates = []
@@ -43,13 +43,15 @@ def extract_data(spark) -> DataFrame:
     data = js['data']
 
     for item in data:
-        dates.append(item['date'])
+        dates.append(item['date']) 
         total_cases.append(item["cases"]["total"]["value"])
+
 
     # Improve this directly in spark.
     pdf = pd.DataFrame({"date": dates, "total_cases": total_cases}).dropna()
-
+    
     assert data_validation(pdf), '\n* Data validation not achieved *\n'
+    
     sdf = spark.createDataFrame(pdf)
 
     return sdf

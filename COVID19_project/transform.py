@@ -6,15 +6,21 @@ from pyspark.sql.types import TimestampType
 import pyspark.pandas as ps
 
 
-def calc_moving_average(df: DataFrame, temporal_window:int) -> DataFrame:
-    """Calcultation of moving average
+def calc_rolling_mean(df: DataFrame, temporal_window:int) -> DataFrame:
+    """Calcultation of rolling mean
 
     :param df: Input Spark DataFrame.
-    :param temporal_window: The size of the window when calculating the moving average
+    :param temporal_window: The size of the window when calculating the rolling mean
     :return: Transformed DataFrame.
     """
+    psdf = df.pandas_api()
+    roll_series = psdf["difference_total_cases"].rolling(temporal_window).mean()
+    roll_series.name = "rolling_mean_total_cases"
     
-    return df
+    roll_psdf = ps.merge(psdf, roll_series, left_index=True, right_index=True, how="left")
+    roll_df = roll_psdf.to_spark()
+    
+    return roll_df
 
 def transform_date_to_datetime(date: datetime.date) -> datetime.datetime:
     """transform Date format to Datetime. 
@@ -60,5 +66,7 @@ def transform_data(df: DataFrame) -> DataFrame:
     
     df = df.sort("datetime")
     df = calc_daily_difference(df)
+
+    df = calc_rolling_mean(df, 7)
     
     return df

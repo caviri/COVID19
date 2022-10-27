@@ -199,29 +199,3 @@ class SparkTransformTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-
-
-    
-        # expected_transform_date_to_datetime = (
-        #     self.spark
-        #     .read
-        #     .parquet(self.test_data_path + 'test_transform_date_to_datetime'))
-
-        # expected_transform_date_to_datetime_cols = len(expected_transform_date_to_datetime.columns)
-        # expected_transform_date_to_datetime_rows = expected_transform_date_to_datetime.count()
-
-        # expected_to_date = (
-        #     self.spark
-        #     .read
-        #     .parquet(self.test_data_path + 'test_results'))
-
-        # expected_to_date_cols = len(expected_to_date.columns)
-        # expected_to_date_rows = expected_to_date.count()
-
-        # expected_to_date = (
-        #     self.spark
-        #     .read
-        #     .parquet(self.test_data_path + 'test_results'))
-
-        # expected_to_date_cols = len(expected_to_date.columns)
-        # expected_to_date_rows = expected_to_date.count()

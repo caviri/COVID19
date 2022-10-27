@@ -1,4 +1,9 @@
-# LOAD DATA INTO GEOPARQUET DATABASE
+"""
+load.py
+~~~~~~~
+This Python module contains methods to load transformed data into a database.
+
+"""
 
 import os
 from pyspark.sql import SparkSession, DataFrame

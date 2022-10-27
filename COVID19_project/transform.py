@@ -1,3 +1,10 @@
+"""
+transform.py
+~~~~~~~~~~~~
+This Python module contains all transformations applied to the data.
+
+"""
+
 import datetime 
 
 from pyspark.sql import DataFrame

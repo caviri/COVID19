@@ -1,3 +1,10 @@
+"""
+extract.py
+~~~~~~~~~~
+This Python module contains methods to extract data from covidtracking API.
+
+"""
+
 import requests
 import pandas as pd
 

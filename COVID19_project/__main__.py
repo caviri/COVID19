@@ -1,8 +1,7 @@
 """
 __main__.py
 ~~~~~~~~~~
-This Python module contains an example Apache Spark ETL job definition
-that implements best practices for production ETL jobs.
+This Python module contains an example Apache Spark ETL job for producing a COVID19 related visualization. 
 """
 
 from .extract import extract_data

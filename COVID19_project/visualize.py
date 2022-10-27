@@ -1,6 +1,6 @@
 """
 visualize.py
-~~~~~~~~~~
+~~~~~~~~~~~~
 This Python module contains the visualization code in order to create a Bokeh App
 
 """

@@ -178,7 +178,7 @@ Every field is organized in 3 categories: cases, testing, and outcomes. Then, ev
 - Accelerate the process
 - Transforms can include moving average as an example. 
 
-### Day log
+### Dev log
 
 #### 23/10
 
@@ -288,6 +288,25 @@ Useful links:
 #### 27/10
 
 I included some exceptions for the API request. Now the database can be overwritten without duplicates issues. And I added another transformation: Rolling Mean. Now I will include some tests with a small dataset of those transformations for the unittest. 
+
+Test working correctly for one transformation. Now tests needs to be generated for every transformation. 
+
+Application running smoothly with `python -m covid19_project` but some warnings appeared:
+
+```python
+/usr/local/spark/python/pyspark/sql/pandas/conversion.py:474: FutureWarning: iteritems is deprecated and will be removed in a future version. Use .items instead.
+  for column, series in pdf.iteritems():
+/usr/local/spark/python/pyspark/sql/pandas/conversion.py:486: FutureWarning: iteritems is deprecated and will be removed in a future version. Use .items instead.
+  for column, series in pdf.iteritems():
+/usr/local/spark/python/pyspark/pandas/utils.py:975: PandasAPIOnSparkAdviceWarning: If `index_col` is not specified for `to_spark`, the existing index is lost when converting to Spark DataFrame.
+  warnings.warn(message, PandasAPIOnSparkAdviceWarning)
+22/10/27 11:56:22 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation
+```
+
+In order to test: `python -m unittest test/test_*.py` 
+
+Still some work is required when using spark-submit with `$SPARK_HOME/bin/spark-submit --master local[*] --files configs/config.json covid19_project/__main__.py` 
+
 
 
 ### Tutorial

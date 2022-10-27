@@ -5,15 +5,12 @@ This Python module contains an example Apache Spark ETL job definition
 that implements best practices for production ETL jobs.
 """
 
-#from dependencies.spark import start_spark
-from pyspark.sql import SparkSession, DataFrame
+from .extract import extract_data
+from .transform import transform_data
+from .load import load_data
+from .visualize import read_data, bokeh_app
 
-from extract import extract_data
-from transform import transform_data
-from load import load_data
-from visualize import read_data, bokeh_app
-
-from dependencies import start_spark
+from dependencies.spark import start_spark
 
 def main():
     """Main ETL script definition.
@@ -32,7 +29,7 @@ def main():
     # execute ETL pipeline
     data = extract_data(spark)
     data_transformed = transform_data(data)
-    load_data(data_transformed)
+    load_data(spark, data_transformed)
 
     # execute visualization pipeline
     data_loaded = read_data(spark) # Here we can specify the query

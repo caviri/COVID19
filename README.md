@@ -1,4 +1,6 @@
-# Task 1: Visualization of COVID data
+# COVID19 Visualization Project
+
+[**Documentation**](https://caviri.github.io/COVID19/)
 
 ## Background
 

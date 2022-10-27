@@ -284,7 +284,10 @@ Useful links:
 - https://www.youtube.com/watch?v=AHMm1wfGuHE&t=1s&ab_channel=TuanVu
 - https://www.revisitclass.com/hadoop/how-to-write-a-spark-dataframe-to-hive-table-in-pyspark/
 - https://hshirodkar.medium.com/apache-hive-on-docker-4d7280ac6f8e
-- 
+
+#### 27/10
+
+I included some exceptions for the API request. Now the database can be overwritten without duplicates issues. And I added another transformation: Rolling Mean. Now I will include some tests with a small dataset of those transformations for the unittest. 
 
 
 ### Tutorial

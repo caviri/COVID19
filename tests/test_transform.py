@@ -1,4 +1,3 @@
-
 """
 test_transform.py
 ~~~~~~~~~~~~~~~
@@ -12,8 +11,11 @@ import json
 
 from pyspark.sql.functions import mean
 from dependencies.spark import start_spark
-from COVID19_project.transform import transform_data
 
+
+from covid19_project.transform import transform_data
+
+from pyspark.sql.functions import to_date
 
 class SparkTransformTests(unittest.TestCase):
     """Test suite for transformation in transform.py
@@ -22,7 +24,7 @@ class SparkTransformTests(unittest.TestCase):
     def setUp(self):
         """Start Spark, define config and path to test data
         """
-        self.config = json.loads("""{"steps_per_floor": 21}""")
+        self.config = json.loads("""{"temporal_window": 7}""")
         self.spark, *_ = start_spark()
         self.test_data_path = 'tests/test_data/'
 
@@ -41,42 +43,52 @@ class SparkTransformTests(unittest.TestCase):
         input_data = (
             self.spark
             .read
-            .parquet(self.test_data_path + 'test_data'))
+            .parquet(self.test_data_path + 'test_input_data'))
 
-        expected_data = (
+        expected_to_date = (
             self.spark
             .read
-            .parquet(self.test_data_path + 'test_results'))
+            .parquet(self.test_data_path + 'test_to_date'))
 
-        expected_cols = len(expected_data.columns)
-        expected_rows = expected_data.count()
+        expected_to_date_cols = len(expected_to_date.columns)
+        expected_to_date_rows = expected_to_date.count()
 
-        expected_avg_steps = (
-            expected_data
-            .agg(mean('steps_to_desk').alias('avg_steps_to_desk'))
-            .collect()[0]
-            ['avg_steps_to_desk'])
+        # expected_transform_date_to_datetime = (
+        #     self.spark
+        #     .read
+        #     .parquet(self.test_data_path + 'test_transform_date_to_datetime'))
+
+        # expected_transform_date_to_datetime_cols = len(expected_transform_date_to_datetime.columns)
+        # expected_transform_date_to_datetime_rows = expected_transform_date_to_datetime.count()
+
+        # expected_to_date = (
+        #     self.spark
+        #     .read
+        #     .parquet(self.test_data_path + 'test_results'))
+
+        # expected_to_date_cols = len(expected_to_date.columns)
+        # expected_to_date_rows = expected_to_date.count()
+
+        # expected_to_date = (
+        #     self.spark
+        #     .read
+        #     .parquet(self.test_data_path + 'test_results'))
+
+        # expected_to_date_cols = len(expected_to_date.columns)
+        # expected_to_date_rows = expected_to_date.count()
 
         # act
-        data_transformed = transform_data(input_data, 21)
+        data_transformed = input_data.withColumn("date", to_date("date", 'yyyy-MM-dd'))
 
-        cols = len(expected_data.columns)
-        rows = expected_data.count()
-        avg_steps = (
-            expected_data
-            .agg(mean('steps_to_desk').alias('avg_steps_to_desk'))
-            .collect()[0]
-            ['avg_steps_to_desk'])
-
+        cols = len(data_transformed.columns)
+        rows = data_transformed.count()
 
         # assert
-        self.assertEqual(expected_cols, cols)
-        self.assertEqual(expected_rows, rows)
-        self.assertEqual(expected_avg_steps, avg_steps)
-        self.assertTrue([col in expected_data.columns
+        self.assertEqual(expected_to_date_cols, cols)
+        self.assertEqual(expected_to_date_rows, rows)
+
+        self.assertTrue([col in expected_to_date.columns
                          for col in data_transformed.columns])
-
-
 
 if __name__ == '__main__':
     unittest.main()

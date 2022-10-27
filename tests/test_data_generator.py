@@ -22,22 +22,22 @@ def create_testdata(spark: SparkSession) -> None:
     data = extract_data(spark)
 
     df = data.limit(50)
-    df.write.parquet("test_data/test_input_data.parquet")
+    df.write.parquet("tests_data/test_input_data.parquet")
 
     df = df.withColumn("date", to_date("date", 'yyyy-MM-dd'))
-    df.write.parquet("test_data/test_to_date.parquet")
+    df.write.parquet("tests_data/test_to_date.parquet")
 
     reg_transform_date_to_datetime = udf(lambda d: transform_date_to_datetime(d), TimestampType())
     df = df.withColumn("datetime", reg_transform_date_to_datetime("date"))
-    df.write.parquet("test_data/test_transform_date_to_datetime.parquet")                                                         
+    df.write.parquet("tests_data/test_transform_date_to_datetime.parquet")                                                         
                                                                 
     df = df.sort("datetime")
-    df.write.parquet("test_data/test_sort.parquet")
+    df.write.parquet("tests_data/test_sort.parquet")
                                                                 
     df = calc_daily_difference(df)
-    df.write.parquet("test_data/test_calc_daily_difference.parquet")
+    df.write.parquet("tests_data/test_calc_daily_difference.parquet")
                                                                 
     df = calc_rolling_mean(df, 7)
-    df.write.parquet("test_data/test_calc_rolling_mean.parquet") 
+    df.write.parquet("tests_data/test_calc_rolling_mean.parquet") 
 
     return None

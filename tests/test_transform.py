@@ -26,7 +26,7 @@ class SparkTransformTests(unittest.TestCase):
         """
         self.config = json.loads("""{"temporal_window": 7}""")
         self.spark, *_ = start_spark()
-        self.test_data_path = 'tests/test_data/'
+        self.test_data_path = 'tests/tests_data/'
 
     def tearDown(self):
         """Stop Spark
@@ -43,12 +43,12 @@ class SparkTransformTests(unittest.TestCase):
         input_data = (
             self.spark
             .read
-            .parquet(self.test_data_path + 'test_input_data'))
+            .parquet(self.test_data_path + 'test_input_data.parquet'))
 
         expected_to_date = (
             self.spark
             .read
-            .parquet(self.test_data_path + 'test_to_date'))
+            .parquet(self.test_data_path + 'test_to_date.parquet'))
 
         expected_to_date_cols = len(expected_to_date.columns)
         expected_to_date_rows = expected_to_date.count()

@@ -1,7 +1,7 @@
 ##FROM continuumio/miniconda3:4.7.12
 FROM jupyter/pyspark-notebook:latest
 
-ADD covid19_project ./covid19_project
+ADD COVID19_project ./COVID19_project
 ADD configs ./configs
 ADD dependencies ./dependencies
 ADD tests ./tests

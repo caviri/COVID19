@@ -74,7 +74,6 @@
              
   <section id="welcome-to-covid19-visualization-project-s-documentation">
 <h1>Welcome to Covid19 Visualization Project’s documentation!<a class="headerlink" href="#welcome-to-covid19-visualization-project-s-documentation" title="Permalink to this heading"></a></h1>
-<p>Text test.</p>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
@@ -112,6 +111,122 @@
 <li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
 <li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
 </ul>
+<section id="background-and-task">
+<h2>Background and task<a class="headerlink" href="#background-and-task" title="Permalink to this heading"></a></h2>
+<p>A common way of viewing statistics related to the COVID-19 pandemic has
+been dashboards. It led to the development of various data sources and
+programmatic ways of access. However, simply showing data without the
+underlying context may be misleading. Hence, bringing additional
+information that helps to understand and interpret data is critical. We
+would love to see your ideas for building pipelines that fetch data and
+relevant contextual information.</p>
+<p>Set up a data processing and visualization pipeline for COVID data. You
+will retrieve the data from a public API (e.g., covidtracking.com),
+write code to process the data as needed, and provide visualizations of
+COVID infections over time.Thetask should:</p>
+<ul class="simple">
+<li><p>Allow interactive exploration and interpretation of covid infections
+in selected countries (e.g., US)</p></li>
+<li><p>Deliver a reproducible pipeline that re-executes automatically</p></li>
+<li><p>Provide a clean and well-documented code</p></li>
+</ul>
+</section>
+<section id="database">
+<h2>Database<a class="headerlink" href="#database" title="Permalink to this heading"></a></h2>
+<p>The covid tracking project compiled US COVID-19-related data from
+02/2022 until 03/2021. It provides data by day and state in three main
+areas: testing, hospitalization, and patient outcomes. Data is provided
+via an <a class="reference external" href="https://covidtracking.com/data/api/version-2">API</a> that can
+be used to retrieve a <code class="docutils literal notranslate"><span class="pre">json</span></code> file.</p>
+<p>As a proof of concept, this tool takes from that database the total
+number of COVID-19 cases by day. This metric is accumulative; therefore,
+if we want to visualize daily COVID-19 cases, we need to transform the
+original data and calculate the difference. Some US health bureaus
+reported cases only on weekdays, while others did it uninterrupted
+daily. This explains why we see a drop in the number of cases during the
+weekend. To correct this “noise”, the tool calculates a rolling mean
+with a window of 7 days. This transformation smoothes the signal and
+corrects this artifact; however, it tends to hamper the detection of
+fast changes in the signal.</p>
+</section>
+<section id="solution">
+<h2>Solution:<a class="headerlink" href="#solution" title="Permalink to this heading"></a></h2>
+<p>The schema of the solution proposed for this task is represented in the
+graph below. <code class="docutils literal notranslate"><span class="pre">PySpark</span></code> will be used for the ETL job and <code class="docutils literal notranslate"><span class="pre">Bokeh</span></code> for
+generating the interactive visualization. Selected data is extracted
+from the database API. Then, after a data validation checking, several
+transformations are applied to the data, such as the conversion of
+dates, calculation of daily differences, and time-series sequence
+smoothing via rolling mean. Next, data is loaded into a parquet
+database. This loading process checks for duplicates, and therefore it
+can be run repeatedly without affecting the database.</p>
+<a class="reference internal image-reference" href="_images/pipeline.jpeg"><img alt="_images/pipeline.jpeg" src="_images/pipeline.jpeg" style="width: 600px;" /></a>
+<p>Finally, the data previously loaded in the parquet database is used to
+generate a bokeh interactive plot in <code class="docutils literal notranslate"><span class="pre">html</span></code>.</p>
+<a class="reference internal image-reference" href="_images/covid_plot.gif"><img alt="_images/covid_plot.gif" src="_images/covid_plot.gif" style="width: 600px;" /></a>
+<p>In this proof of concept, I used the total number of COVID-19 cases.
+However, it can be adapted to any of the metrics available in the API.</p>
+</section>
+<section id="project-structure">
+<h2>Project Structure<a class="headerlink" href="#project-structure" title="Permalink to this heading"></a></h2>
+<p>The structure of the project is inspired from this
+<a class="reference external" href="https://github.com/AlexIoannides/pyspark-example-project">repository</a>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>root/
+ <span class="p">|</span>-- configs/
+ <span class="p">|</span>   <span class="p">|</span>-- configs.json
+ <span class="p">|</span>-- dependencies/
+ <span class="p">|</span>   <span class="p">|</span>-- logging.py
+ <span class="p">|</span>   <span class="p">|</span>-- spark.py
+ <span class="p">|</span>-- COVID19_project/
+ <span class="p">|</span>   <span class="p">|</span>-- __main__.py
+ <span class="p">|</span>   <span class="p">|</span>-- extract.py
+ <span class="p">|</span>   <span class="p">|</span>-- transform.py
+ <span class="p">|</span>   <span class="p">|</span>-- load.py
+ <span class="p">|</span>   <span class="p">|</span>-- visualize.py
+ <span class="p">|</span>-- tests/
+ <span class="p">|</span>   <span class="p">|</span>-- test_data/
+ <span class="p">|</span>   <span class="p">|</span>-- <span class="p">|</span> -- test_to_date.parquet
+ <span class="p">|</span>   <span class="p">|</span>-- <span class="p">|</span> -- ...
+ <span class="p">|</span>   <span class="p">|</span>-- test_transform.py
+ <span class="p">|</span>   <span class="p">|</span>-- data_generator.py
+ <span class="p">|</span>   requirements.txt
+</pre></div>
+</div>
+<p>The ETL task and visualization tool are contained in
+<code class="docutils literal notranslate"><span class="pre">COVID19_project</span></code>. There, each file contains the methods required for
+each part of the project: extraction, transformation, loading, and
+visualization. Different parameters can be configured in
+<code class="docutils literal notranslate"><span class="pre">configs/configs.json</span></code> and then used in transformation methods.
+Additional modules that support the pySpark session and logging can be
+found in <code class="docutils literal notranslate"><span class="pre">dependencies</span></code>. Finally, unit test modules are stored in
+tests next to small representative portions of input and output data.
+Each of the transformations methods has its own test function.</p>
+</section>
+<section id="ideas-for-further-development">
+<h2>Ideas for further development<a class="headerlink" href="#ideas-for-further-development" title="Permalink to this heading"></a></h2>
+<section id="visualization">
+<h3>Visualization<a class="headerlink" href="#visualization" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Extract daily cases per state.</p></li>
+<li><p>Integrate states databases with their geoboundary in a geoparquet
+file.</p></li>
+<li><p>Develop a map visualization of US with a colormap depending on the
+cases.</p></li>
+</ul>
+</section>
+<section id="database-1">
+<span id="id1"></span><h3>Database<a class="headerlink" href="#database-1" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Implement a Hadoop/HIVE database to test performance.</p></li>
+</ul>
+</section>
+<section id="querying">
+<h3>Querying<a class="headerlink" href="#querying" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Allow custom SQL queries to retrieve information from the database.</p></li>
+</ul>
+</section>
+</section>
 </section>
 
 

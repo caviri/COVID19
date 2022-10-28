@@ -1,6 +1,13 @@
 
 # Created by https://www.toptal.com/developers/gitignore/api/python,jupyternotebooks,vscode
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,jupyternotebooks,vscode
+# Edited by Carlos Vivar Rios
+
+### VS CODE ###
+
+.vscode
+*/.vscode/*
+
 
 ### JupyterNotebooks ###
 # gitignore template for Jupyter Notebooks

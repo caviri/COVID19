@@ -32,7 +32,7 @@ graph LR;
 
 ## Output
 
-<img src="https://raw.githubusercontent.com/caviri/COVID19/main/sphinx/imgs/covid_plot.gif", width="700">
+<img src="https://raw.githubusercontent.com/caviri/COVID19/main/sphinx/imgs/covid_plot.gif", width=700>
 
 ## How to run this project
 

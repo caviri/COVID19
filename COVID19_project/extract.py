@@ -32,7 +32,7 @@ def data_validation(df: pd.DataFrame) -> bool:
 
 
 def extract_data(spark: SparkSession) -> DataFrame:
-    """Load data from Parquet file format.
+    """Extract total cases from Covid Tracking API. 
 
     :param spark: Spark session object.
     :return: Spark DataFrame.

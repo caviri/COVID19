@@ -25,12 +25,20 @@ graph LR;
     CT(Covid tracker JSON) --> PE(PySpark Extraction)
     subgraph one[ETL]
     PE --> T(Transformation)
-    T --> L(Loading in a parquet database)
+    T --> L(Loading in parquet database)
     end
     L --> BH(Bokeh Interactive Visualization)
 ```
 
+## Output
+
+![]('sphinx/imgs/covid_plot.gif')
+
 ## How to run this project
+
+### Run in MyBinder
+
+The faster way of testing the tool is via Mybinder [here](https://mybinder.org/v2/gh/caviri/COVID19/HEAD). Once the jupyter interface is loaded you can open the terminal and run `python -m COVID19_project`. After some moments the database and the visualization will be stored in the folder `output`.
 
 ### Installation of dependencies
 
@@ -73,9 +81,7 @@ As an alternative to build your own image it is possible to pull a image from do
 
 ```
 docker pull caviri/covid19:latest
-```
-
-### Run in MyBinder
+``` 
 
 ## Structure of the project
 

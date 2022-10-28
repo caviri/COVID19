@@ -32,7 +32,7 @@ graph LR;
 
 ## Output
 
-![]('./sphinx/imgs/covid_plot.gif')
+![]('https://raw.githubusercontent.com/caviri/COVID19/main/sphinx/imgs/covid_plot.gif')
 
 ## How to run this project
 

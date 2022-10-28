@@ -32,7 +32,7 @@ graph LR;
 
 ## Output
 
-![]('sphinx/imgs/covid_plot.gif')
+![]('./sphinx/imgs/covid_plot.gif')
 
 ## How to run this project
 

@@ -1,6 +1,6 @@
 # COVID19 Visualization Project
 
-[**Documentation**](https://caviri.github.io/COVID19/)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/caviri/COVID19/HEAD) [**Documentation**](https://caviri.github.io/COVID19/)
 
 ## Background
 

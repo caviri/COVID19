@@ -11,6 +11,7 @@ from .visualize import read_data, bokeh_app
 
 from dependencies.spark import start_spark
 
+
 def main():
     """Main ETL script definition.
 
@@ -19,11 +20,11 @@ def main():
 
     # start Spark application and get Spark session, logger and config
     spark, log, config = start_spark(
-       app_name='covid19',
-       files=['configs/config.json'])
+       app_name="covid19",
+       files=["configs/config.json"])
 
     # log that main ETL job is starting
-    log.warn('covid19 job is up-and-running')
+    log.warn("covid19 job is up-and-running")
 
     # execute ETL pipeline
     data = extract_data(spark)
@@ -31,17 +32,16 @@ def main():
     load_data(spark, data_transformed)
 
     # execute visualization pipeline
-    data_loaded = read_data(spark) # Here we can specify the query
-    bokeh_app(data_loaded) # Here we can specify the path
+    data_loaded = read_data(spark)
+    bokeh_app(data_loaded)
 
     # log the success and terminate Spark application
-    log.warn('covid19 job is finished')
+    log.warn("covid19 job is finished")
     spark.stop()
 
     return None
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # Check if the api is online and that the version is compatible. 
     main()
-    

@@ -87,11 +87,14 @@
 </section>
 <dl class="py function">
 <dt class="sig sig-object py" id="visualize.bokeh_app">
-<span class="sig-prename descclassname"><span class="pre">visualize.</span></span><span class="sig-name descname"><span class="pre">bokeh_app</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#visualize.bokeh_app" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">visualize.</span></span><span class="sig-name descname"><span class="pre">bokeh_app</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">html_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'covid19.html'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#visualize.bokeh_app" title="Permalink to this definition"></a></dt>
 <dd><p>Bokeh Time-Series visualization</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>df</strong> – Input Spark DataFrame</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> – Input Spark DataFrame</p></li>
+<li><p><strong>html_file</strong> – name of the file output</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>None</p>
@@ -101,11 +104,14 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="visualize.read_data">
-<span class="sig-prename descclassname"><span class="pre">visualize.</span></span><span class="sig-name descname"><span class="pre">read_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spark</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SparkSession</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#visualize.read_data" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">visualize.</span></span><span class="sig-name descname"><span class="pre">read_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spark</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SparkSession</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">db_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'db.parquet'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#visualize.read_data" title="Permalink to this definition"></a></dt>
 <dd><p>Read data from database</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>spark</strong> – spark session</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>spark</strong> – spark session</p></li>
+<li><p><strong>db_file</strong> – database file in output folder</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Spark DataFrame</p>

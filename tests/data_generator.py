@@ -7,14 +7,12 @@ Module used to generate test dataset.
 from pyspark.sql import SparkSession
 
 from covid19_project.extract import extract_data
-from covid19_project.transform import transform_date_to_datetime, calc_daily_difference, calc_rolling_mean
-
-from pyspark.sql.functions import udf, to_date
-from pyspark.sql.types import TimestampType
+from covid19_project.transform import transform_col_string_to_date, transform_col_date_to_datetime, calc_daily_difference, calc_rolling_mean
 
 
 def create_testdata(spark: SparkSession) -> None:
-    """Method to generate and store in parquet format all the intermediate files of each transformation.
+    """Method to generate and store in parquet format all the intermediate 
+    files of each transformation.
 
     :param spark: Spark session object.
     :return: None.
@@ -24,20 +22,19 @@ def create_testdata(spark: SparkSession) -> None:
     df = data.limit(50)
     df.write.parquet("tests_data/test_input_data.parquet")
 
-    df = df.withColumn("date", to_date("date", 'yyyy-MM-dd'))
+    df = transform_col_string_to_date(df, input_name="date", output_name="date")
     df.write.parquet("tests_data/test_to_date.parquet")
 
-    reg_transform_date_to_datetime = udf(lambda d: transform_date_to_datetime(d), TimestampType())
-    df = df.withColumn("datetime", reg_transform_date_to_datetime("date"))
+    df = transform_col_date_to_datetime(df, input_name="date", output_name="datetime")
     df.write.parquet("tests_data/test_transform_date_to_datetime.parquet")                                                         
                                                                 
     df = df.sort("datetime")
     df.write.parquet("tests_data/test_sort.parquet")
                                                                 
-    df = calc_daily_difference(df)
+    df = calc_daily_difference(df, input_name="total_cases", output_name="difference_total_cases" )
     df.write.parquet("tests_data/test_calc_daily_difference.parquet")
                                                                 
-    df = calc_rolling_mean(df, 7)
+    df = calc_rolling_mean(df, 7, input_name="difference_total_cases", output_name="rolling_mean_total_cases")
     df.write.parquet("tests_data/test_calc_rolling_mean.parquet") 
 
     return None

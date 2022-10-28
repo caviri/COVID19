@@ -1,8 +1,10 @@
-FROM continuumio/miniconda3:4.7.12
+##FROM continuumio/miniconda3:4.7.12
+FROM jupyter/pyspark-notebook:latest
 
-RUN mkdir /opt/SDSC/
-ADD covid19_project /opt/SDSC/covid_project/
+COPY covid19_project ./covid19_project
+COPY configs ./configs
+COPY dependencies ./dependencies
+COPY tests ./tests
+COPY requirements.txt ./requirements.txt
 
-WORKDIR /opt/SDSC/
-ENV PYTHONPATH /opt/SDSC
-RUN python setup.py install
+RUN pip install -r requirements.txt

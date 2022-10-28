@@ -91,7 +91,11 @@
 <dd><p>Collect data locally and write to a parquet file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>df</strong> – DataFrame to store.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>spark</strong> – Spark session used.</p></li>
+<li><p><strong>df</strong> – DataFrame to store.</p></li>
+<li><p><strong>db_file</strong> – Database filename.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>None</p>

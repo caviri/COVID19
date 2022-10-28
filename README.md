@@ -309,7 +309,9 @@ In order to test: `python -m unittest test/test_*.py`
 
 Still some work is required when using spark-submit with `$SPARK_HOME/bin/spark-submit --master local[*] --files configs/config.json covid19_project/__main__.py` 
 
+#### 28/10
 
+Applying some style corrections with flake8, and configuring correctly the docker container for mybinder. 
 
 ### Tutorial
 

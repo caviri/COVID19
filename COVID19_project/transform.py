@@ -26,6 +26,7 @@ def transform_item_date_to_datetime(date: datetime.date) -> datetime.datetime:
     
     return min_datetime
 
+
 def transform_col_date_to_datetime(df: DataFrame, input_name: str, output_name: str) -> DataFrame:
     """Transform column date into to column in datetime type.
 
@@ -40,6 +41,7 @@ def transform_col_date_to_datetime(df: DataFrame, input_name: str, output_name: 
     
     return df
 
+
 def transform_col_string_to_date(df: DataFrame, input_name: str, output_name: str) -> DataFrame:
     """Transform column date in string to column date in date type.
     
@@ -49,7 +51,7 @@ def transform_col_string_to_date(df: DataFrame, input_name: str, output_name: st
     :return: Transformed Spark DataFrame.
     """
     
-    df = df.withColumn(output_name, to_date(input_name, 'yyyy-MM-dd'))
+    df = df.withColumn(output_name, to_date(input_name, "yyyy-MM-dd"))
         
     return df
 
@@ -73,7 +75,8 @@ def calc_daily_difference(df: DataFrame, input_name: str , output_name: str) -> 
 
     return diff_df
 
-def calc_rolling_mean(df: DataFrame, temporal_window:int, input_name: str, output_name: str) -> DataFrame:
+
+def calc_rolling_mean(df: DataFrame, temporal_window: int, input_name: str, output_name: str) -> DataFrame:
     """Calcultation of rolling mean
 
     :param df: Input Spark DataFrame.
@@ -105,7 +108,7 @@ def transform_data(df: DataFrame) -> DataFrame:
     
     df = df.sort("datetime")
     
-    df = calc_daily_difference(df, input_name="total_cases" , output_name="difference_total_cases" )
+    df = calc_daily_difference(df, input_name="total_cases" , output_name="difference_total_cases")
     
     df = calc_rolling_mean(df, 7, input_name="difference_total_cases", output_name="rolling_mean_total_cases")
     

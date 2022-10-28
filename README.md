@@ -36,7 +36,7 @@ graph LR;
 
 Finally, the data previously loaded in the parquet database is used to generate a bokeh interactive plot in `html`. 
 
-![]('sphinx/imgs/covid_plot.gif')
+<img src="https://raw.githubusercontent.com/caviri/COVID19/main/sphinx/imgs/covid_plot.gif" width=700>
 
 In this proof of concept, I used the total number of COVID-19 cases. However, it can be adapted to any of the metrics available in the API. 
 

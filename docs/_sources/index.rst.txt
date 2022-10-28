@@ -6,11 +6,16 @@
 Welcome to Covid19 Visualization Project's documentation!
 =========================================================
 
+Text test.
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
+   install
+   database
    modules
+   devlog
 
 Indices and tables
 ==================

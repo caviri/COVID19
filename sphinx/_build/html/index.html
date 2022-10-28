@@ -17,10 +17,12 @@
         <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="covid19_project" href="modules.html" /> 
+    <link rel="next" title="Installation and run" href="install.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -40,7 +42,10 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation and run</a></li>
+<li class="toctree-l1"><a class="reference internal" href="database.html">Database</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">covid19_project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="devlog.html">DevLog</a></li>
 </ul>
 
         </div>
@@ -69,14 +74,32 @@
              
   <section id="welcome-to-covid19-visualization-project-s-documentation">
 <h1>Welcome to Covid19 Visualization Project’s documentation!<a class="headerlink" href="#welcome-to-covid19-visualization-project-s-documentation" title="Permalink to this heading"></a></h1>
+<p>Text test.</p>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation and run</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#run">Run</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#run-tests">Run tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#run-in-docker">Run in docker</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="database.html">Database</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="database.html#national-data">National Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="database.html#state-terrtories-data">State &amp; Terrtories Data</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">covid19_project</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="extract.html">extract module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="transform.html">transform module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="load.html">load module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="visualize.html">visualize module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="devlog.html">DevLog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="devlog.html#ideas">Ideas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="devlog.html#dev-log">Dev log</a></li>
 </ul>
 </li>
 </ul>
@@ -95,7 +118,7 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="modules.html" class="btn btn-neutral float-right" title="covid19_project" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="install.html" class="btn btn-neutral float-right" title="Installation and run" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

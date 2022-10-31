@@ -4,6 +4,8 @@
 
 [**Documentation**](https://caviri.github.io/COVID19/)
 
+This branch goal is to create a process that is able to extract sentences from a wikipedia articles including any date, and store them as events in the database. 
+
 ## Background and task
 
 A common way of viewing statistics related to the COVID-19 pandemic has been dashboards. It led to the development of various data sources and programmatic ways of access. However, simply showing data without the underlying context may be misleading. Hence, bringing additional information that helps to understand and interpret data is critical. We would love to see your ideas for building pipelines that fetch data and relevant contextual information.
